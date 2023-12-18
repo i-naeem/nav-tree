@@ -1,3 +1,4 @@
+from typing import List, Tuple, Union
 from bs4 import PageElement
 from bs4 import BeautifulSoup
 import requests
@@ -22,3 +23,26 @@ def get_nav(url: str) -> PageElement:
     response = requests.get(url, headers={"User-Agent": USER_AGENT})
     soup = BeautifulSoup(response.content, 'html.parser')
     return soup.find('nav')
+
+
+def print_tree(
+        lst: List[Tuple[int, str, Union[str, None]]],
+        level: int = 0,
+        verbose: bool = False) -> None:
+
+    if not lst:
+        return
+    while lst:
+        l, title, href = lst.pop(0)
+        if l < level:
+            lst.insert(0, (l, title, href))
+            return
+        indent = '| ' * (l - 1)
+        output = f"{indent}- {title}"
+
+        if verbose:
+            output = f"{indent}|  {title} ({href})"
+        else:
+            print(output)
+        if lst and lst[0][0] > level:
+            print_tree(lst, level + 1, verbose)

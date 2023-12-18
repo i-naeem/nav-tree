@@ -5,13 +5,13 @@ from bs4 import PageElement
 history = []
 
 
-def traverse(element: PageElement, level: int, unique=True) -> list[tuple[int, str, str]]:
+def traverse(element: PageElement, level: int = 1, unique=True) -> list[tuple[int, str, str]]:
     """
     traverse over all the links in the navbar and returns the list of links with their level.
 
     Args:
         element (PageElement): Navbar Element
-        level (int): The level or depth of the element.
+        level (int, optional): The level or depth of the element. default to 1.
         unique (bool, optional): When set to true only returns unique links. Defaults to True.
 
     Returns:
@@ -28,7 +28,7 @@ def traverse(element: PageElement, level: int, unique=True) -> list[tuple[int, s
             title = anchor.text
             # If we have already visited that link skip it.
             if (href not in history):
-                links.append((level, href, title))
+                links.append((level, title, href))
                 history.append(href)
 
         links.extend(traverse(item, level + 1))

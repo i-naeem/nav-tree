@@ -38,11 +38,12 @@ def print_tree(
             lst.insert(0, (l, title, href))
             return
         indent = '| ' * (l - 1)
-        output = f"{indent}- {title}"
+        output = f"{indent}| - {title}"
 
         if verbose:
-            output = f"{indent}|  {title} ({href})"
-        else:
-            print(output)
+            output = f"{indent}| - {title} ({href})"
+
+        print(output)
+
         if lst and lst[0][0] > level:
             print_tree(lst, level + 1, verbose)

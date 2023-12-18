@@ -29,8 +29,9 @@ def traverse(element: PageElement, level: int = 1, unique=True) -> list[tuple[in
             # If we have already visited that link skip it.
             if (href not in history):
                 links.append((level, title, href))
-                history.append(href)
+                if (unique):
+                    history.append(href)
 
-        links.extend(traverse(item, level + 1))
+        links.extend(traverse(item, level + 1, unique=unique))
 
     return links
